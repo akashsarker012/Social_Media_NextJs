@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { NextRequest, NextResponse } from 'next/server';
+import Link from 'next/link';
 
 const CurrentUser = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  console.log(currentUser, 'current user');
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -46,10 +48,12 @@ const CurrentUser = () => {
   if (!currentUser) {
     return <p>No user information available.</p>;
   }
+  
 
   return (
     <div>
       <h2>Welcome, {currentUser.name}!</h2>
+      <Link href={"/"+currentUser.id}>View Profile</Link>
       <h2>Welcome, {currentUser.id}</h2>
       <p>Email: {currentUser.email}</p>
       {/* Display other user information as needed */}
