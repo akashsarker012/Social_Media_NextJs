@@ -1,14 +1,14 @@
+
+const hostnames = [
+  'readymadeui.com',
+  "i.pravatar.cc",
+]
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: [
-          {
-            protocol: 'https',
-            hostname: "i.pravatar.cc",
-            port: '',
-          },
-        ],
-      },
-};
+      domains: hostnames,
+    },
+  }
+
 
 export default nextConfig;
