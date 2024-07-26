@@ -18,13 +18,12 @@ export default function Login() {
     try {
       const response = await axios.post('http://localhost:8000/api/v1/login', { email, password });
       console.log(response.data);
-      // Clear previous error message
       Cookies.set('user_id', response.data.token); 
       router.push('/', { scroll: false })
       setError('');
     } catch (error) {
       console.log(error)
-      setError('Invalid credentials. Please try again.');
+      setError(error);
     }
   };
 

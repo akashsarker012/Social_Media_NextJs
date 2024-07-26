@@ -1,26 +1,45 @@
-import Link from "next/link";
+"use client"
+import React, { useEffect, useState } from "react";
+import axios from "axios"
+import PostCard from "@/components/cards/PostCard";
 
 async function getData() {
-  const res = await fetch('http://localhost:8000/api/v1/getallpost')
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
+  const backendApi = process.env.NEXT_PUBLIC_BACKEND_API;
+  const res = await axios.get(`${backendApi}/api/v1/get-allpost`);
+
+  if (res.status !== 200) {
+    throw new Error("Failed to fetch data");
   }
- 
-  return res.json()
+
+  return res.data;
 }
- 
-export default async function Page() {
-  const data = await getData()
-  console.log(data);
- 
-  return <main>
-    {data.map(post => 
-    <>
-    <p key={post.id}>{post.title}</p>
-    <Link href={`/post/${post._id}`} key={post.id}>{post._id}</Link>
-    
-    </>
-    
-    )}
-  </main>
+
+export default function getAllPost() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const data = await getData();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    }
+    fetchPosts();
+  }, []);
+
+  return (
+    <div>
+      {posts.map((post, index) => (
+        <PostCard
+          key={index}
+          name={post.owner.name}
+          email={post.createdAt}
+          image={post.image}
+          description={post.description}
+        />
+      ))}
+    </div>
+  );
 }

@@ -36,7 +36,7 @@ function Topbar() {
             'x-access-token': token
           }
         });
-        setCurrentUser(response.data.currentUser);
+        setCurrentUser(response?.data?.currentUser);
       } catch (error) {
         console.error('Error fetching current user:', error.message);
       }
@@ -53,6 +53,7 @@ function Topbar() {
       </Link>
       <div ref={ref} onClick={handleDropdowns}>
         <Avatar
+        imageURL={currentUser?.profilepic}
         />
         {
           open &&

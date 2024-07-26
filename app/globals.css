@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  /* background-color: rgba(9, 9, 10, 0.95) */
+  background-color: #000000;
+}
+
 @layer components {
   .main-container {
     @apply flex min-h-screen flex-1 flex-col items-center  px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
