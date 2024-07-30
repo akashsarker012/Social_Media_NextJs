@@ -1,4 +1,5 @@
 import Avatar from "@/lib/Avatar";
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -12,7 +13,10 @@ function PostCard({ name, time, image, description, ownerImage }) {
         <Avatar imageURL={ownerImage} />
         <div>
           <p className="text-[15px] text-gray-300 font-bold">{name}</p>
-          <p className="text-xs text-[#ffffffb3] mt-0.5">{time}</p>
+          <p className="text-xs text-[#ffffffb3] mt-0.5">
+          {/* {moment(time).startOf('time').fromNow()} */}
+          {moment(time).endOf('hour').fromNow()}
+          </p>
         </div>
       </div>
       <div className="w-full min-h-[300px]">

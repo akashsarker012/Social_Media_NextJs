@@ -1,32 +1,30 @@
-import { NextResponse } from 'next/server'
- 
-// This function can be marked `async` if using `await` inside
+import { NextResponse } from 'next/server';
+
 export function middleware(request) {
-    const path = request.nextUrl.pathname
+  const path = request.nextUrl.pathname;
 
-    const isPublicPath = path === '/login' || path === '/register'
+  const isPublicPath = path === '/login' || path === '/register';
 
-    const token = request.cookies.get('user_id')?.value || ''
+  const token = request.cookies.get('user_id')?.value || '';
 
-    console.log(token)
+  // Redirect authenticated users away from public paths
+  if (isPublicPath && token) {
+    return NextResponse.redirect(new URL('/', request.nextUrl));
+  }
 
-    if(isPublicPath && token){
-        return NextResponse.redirect(new URL('/',request.nextUrl))
-    }
+  // Redirect unauthenticated users to the login page for protected paths
+  if (!isPublicPath && !token) {
+    return NextResponse.redirect(new URL('/login', request.nextUrl));
+  }
 
-    if(!isPublicPath && !token){
-        return NextResponse.redirect(new URL('/login',request.nextUrl))
-    }
-
+  // Allow the request to proceed if no redirection is needed
+  return NextResponse.next();
 }
- 
 
-
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: [    
+  matcher: [
     '/login',
     '/register',
-    '/'
+    '/((?!api|_next|static|public).*)', // Match all pages except API routes, Next.js internals, and static files
   ],
-}
+};

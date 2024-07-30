@@ -1,6 +1,7 @@
 import { IoHelpCircleOutline, IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineTeam } from "react-icons/ai";
 import { FcBusinessman } from "react-icons/fc";
+import Cookies from 'js-cookie';
 
 
 export const sidebarLinks = [
@@ -47,6 +48,8 @@ export const sidebarLinks = [
     { value: "members", label: "Members", icon: "/assets/members.svg" },
     { value: "requests", label: "Requests", icon: "/assets/request.svg" },
   ];
+
+
   export const dropdown = [
     { value: "profile", label: "view profile", icon: <FcBusinessman className="w-5 h-5 mx-1"/> },
     { value: "Setting", label: "Setting", icon: <IoSettingsOutline className="w-5 h-5 mx-1"/> },

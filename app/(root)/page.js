@@ -28,7 +28,7 @@ export default function getAllPost() {
       }
     }
     fetchPosts();
-  }, []);
+  }, [posts]);
 
   return (
     <div className="flex flex-col items-center justify-between ">
