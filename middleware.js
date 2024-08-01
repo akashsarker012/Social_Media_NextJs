@@ -1,23 +1,35 @@
 import { NextResponse } from 'next/server';
 
 export function middleware(request) {
-  const path = request.nextUrl.pathname;
+  const url = request.nextUrl.clone();
+  const path = url.pathname;
 
-  const isPublicPath = path === '/login' || path === '/register';
+  // Define public paths and protected paths
+  const isPublicPath = path === '/login' || path === '/register' || path === '/emailverification';
+  const isProtectedPath = !isPublicPath;
 
+  // Check for authentication token
   const token = request.cookies.get('user_id')?.value || '';
 
-  // Redirect authenticated users away from public paths
+  // Redirect logged-in users from public paths to the home page
   if (isPublicPath && token) {
     return NextResponse.redirect(new URL('/', request.nextUrl));
   }
 
-  // Redirect unauthenticated users to the login page for protected paths
-  if (!isPublicPath && !token) {
+  // Redirect unauthenticated users from protected paths to the login page
+  if (isProtectedPath && !token) {
     return NextResponse.redirect(new URL('/login', request.nextUrl));
   }
 
-  // Allow the request to proceed if no redirection is needed
+  // Special case for email verification
+  if (path === '/emailverification') {
+    const email = url.searchParams.get('email');
+    if (!email) {
+      // Redirect to login if no email query parameter
+      return NextResponse.redirect(new URL('/login', request.nextUrl));
+    }
+  }
+
   return NextResponse.next();
 }
 
@@ -25,6 +37,7 @@ export const config = {
   matcher: [
     '/login',
     '/register',
-    '/((?!api|_next|static|public).*)', // Match all pages except API routes, Next.js internals, and static files
+    '/emailverification',
+    '/((?!api|_next|static|public).*)' // Apply to all other paths except API routes, static assets, and public folders
   ],
 };
