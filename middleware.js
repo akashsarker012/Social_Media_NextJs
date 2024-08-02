@@ -10,7 +10,11 @@ export function middleware(request) {
 
   // Check for authentication token
   const token = request.cookies.get('user_id')?.value || '';
+  const email = request.cookies.get('email')?.value || '';
 
+  if (path === '/login' && email) {
+    return NextResponse.redirect(new URL('/emailverification', request.nextUrl));
+  }
   // Redirect logged-in users from public paths to the home page
   if (isPublicPath && token) {
     return NextResponse.redirect(new URL('/', request.nextUrl));
@@ -21,11 +25,9 @@ export function middleware(request) {
     return NextResponse.redirect(new URL('/login', request.nextUrl));
   }
 
-  // Special case for email verification
   if (path === '/emailverification') {
-    const email = url.searchParams.get('email');
+    const email = request.cookies.get('email')?.value;
     if (!email) {
-      // Redirect to login if no email query parameter
       return NextResponse.redirect(new URL('/login', request.nextUrl));
     }
   }
@@ -37,7 +39,6 @@ export const config = {
   matcher: [
     '/login',
     '/register',
-    '/emailverification',
     '/((?!api|_next|static|public).*)' // Apply to all other paths except API routes, static assets, and public folders
   ],
 };

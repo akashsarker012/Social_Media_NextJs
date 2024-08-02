@@ -1,12 +1,13 @@
 "use client"
 import axios from 'axios';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HiOutlineMail } from 'react-icons/hi';
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import toast, { Toaster } from 'react-hot-toast';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  const router = useRouter();
+  const router = useRouter()
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,13 +25,15 @@ export default function Login() {
       const response = await axios.post(`${backendApi}/api/v1/login`, { email, password });
       console.log(response);
       if (response.data.verified === false) {
-        router.push(`/emailverification?email=${encodeURIComponent(email)}`);
+        Cookies.set('email', email);
+        router.push(`/emailverification`);
       } else if (response.data.error) {
         toast.error(response.data.error);
       }
       setError('');
     } catch (error) {
       console.log(error);
+      setError('An error occurred while logging in. Please try again.');
     }
   };
 

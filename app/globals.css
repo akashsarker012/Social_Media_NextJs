@@ -110,6 +110,17 @@ body{
   @apply border border-dark-4 bg-dark-3 text-light-1 !important;
 }
 
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  -webkit-appearance: none;    /* Chrome, Safari */
+  appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 
 
