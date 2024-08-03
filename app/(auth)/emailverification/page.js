@@ -1,22 +1,20 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Button from "@/lib/Button";
 import Cookies from "js-cookie";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const EmailVerification = () => {
   const [email, setEmail] = useState("");
   const inputsRef = useRef([]);
-
-  const searchParams = useSearchParams();
-
   useEffect(() => {
     const email = Cookies.get('email')
     
     if (email) {
       setEmail(email);
     }
-  }, [searchParams]);
+  }, [email]);
 
   const handleChange = (e, index) => {
     const value = e.target.value;
@@ -32,6 +30,29 @@ const EmailVerification = () => {
     }
   };
 
+  const handleOtpverify = (e) => {
+    e.preventDefault();
+    try {
+      const otp = inputsRef.current.map((input) => input.value).join("");
+      console.log(otp);
+      const backendApi = process.env.NEXT_PUBLIC_BACKEND_API;
+      const response = axios.post(`${backendApi}/api/v1/verify-otp`, { otp,email }).then((response) => {
+        if(response.data.error){
+          toast.error(response.data.error);
+        }else{
+          toast.success(response.data.success);
+          Cookies.remove('email');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 2000);
+        }
+      })
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
   return (
     <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
       <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
@@ -43,7 +64,7 @@ const EmailVerification = () => {
             </div>
           </div>
           <div>
-            <form action method="post">
+            <form method="post" onSubmit={handleOtpverify}>
               <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
                 {[...Array(6)].map((_, index) => (
                   <input
@@ -78,4 +99,4 @@ const EmailVerification = () => {
   );
 };
 
-export default EmailVerification;
+export default EmailVerification

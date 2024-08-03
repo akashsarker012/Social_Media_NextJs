@@ -7,6 +7,7 @@ import { FaUser } from "react-icons/fa";
 import Image from "next/image";
 import Button from '@/lib/Button';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Page() {
 
@@ -38,7 +39,7 @@ export default function Page() {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response, 'data');
+      toast.success(response.data);
     } catch (error) {
       console.log(error.message, 'error');
     }

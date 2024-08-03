@@ -7,7 +7,7 @@ const UserData = ({ user, setUser }) => {
     const handleLogout = async () => {
         try {
             await axios.post('/api/logout');
-            setUser(null); // Clear user state upon successful logout
+            setUser(null); 
         } catch (error) {
             console.error('Logout error:', error);
         }

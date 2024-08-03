@@ -24,11 +24,14 @@ export default function Login() {
       const backendApi = process.env.NEXT_PUBLIC_BACKEND_API;
       const response = await axios.post(`${backendApi}/api/v1/login`, { email, password });
       console.log(response);
-      if (response.data.verified === false) {
+       if (response.data.error) {
+        toast.error(response.data.error);
+      }if (response.data.verified === false) {
         Cookies.set('email', email);
         router.push(`/emailverification`);
-      } else if (response.data.error) {
-        toast.error(response.data.error);
+      }else{
+        Cookies.set('user_id', response.data.token); 
+        router.push('/', { scroll: false })
       }
       setError('');
     } catch (error) {

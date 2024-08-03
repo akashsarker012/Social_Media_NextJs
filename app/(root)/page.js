@@ -34,11 +34,13 @@ export default function getAllPost() {
     <div className="flex flex-col items-center justify-between ">
       {posts.map((post, index) => (
         <PostCard
-        key={post._id}
+          key={index}
+          postId={post._id}
           ownerImage={post.owner.profilepic}
           name={post.owner.name}
           time={post.createdAt}
           image={post.image}
+          like={post.like}
           description={post.description}
         />
       ))}
