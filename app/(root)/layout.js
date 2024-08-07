@@ -1,9 +1,10 @@
 import { Inter } from "next/font/google";
-import "../globals.css"
+import "../globals.css";
 import Topbar from "@/components/shared/Topbar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import Bottombar from "@/components/shared/Bottombar";
 import RightSidebar from "@/components/shared/RightSidebar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,18 +17,40 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Topbar />
+        <Topbar />
 
-<main className='flex flex-row'>
-  <LeftSidebar/>
-  <section className='main-container'>
-    <div className='w-full max-w-4xl'>{children}</div>
-  </section>
-  {/* @ts-ignore */}
-  <RightSidebar/>
-</main>
+        <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          className: '',
+          duration: 5000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          success: {
+            duration: 3000,
+            theme: {
+              primary: 'green',
+              secondary: 'black',
+            },
+          },
+        }}
+      />
 
-<Bottombar />
+        <main className="flex flex-row">
+          <LeftSidebar />
+          <section className="main-container">
+            <div className="w-full max-w-4xl">{children}</div>
+          </section>
+          <RightSidebar />
+        </main>
+
+        <Bottombar />
       </body>
     </html>
   );

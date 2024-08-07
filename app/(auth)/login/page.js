@@ -23,7 +23,7 @@ export default function Login() {
     try {
       const backendApi = process.env.NEXT_PUBLIC_BACKEND_API;
       const response = await axios.post(`${backendApi}/api/v1/login`, { email, password });
-      console.log(response);
+      // console.log(response);
        if (response.data.error) {
         toast.error(response.data.error);
       }if (response.data.verified === false) {

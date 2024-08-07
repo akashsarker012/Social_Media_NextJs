@@ -1,8 +1,8 @@
-
 "use client"
 import React, { useEffect, useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import PostCard from "@/components/cards/PostCard";
+import CurrentUser from "@/lib/CurrentUser";
 
 async function getData() {
   const backendApi = process.env.NEXT_PUBLIC_BACKEND_API;
@@ -17,6 +17,7 @@ async function getData() {
 
 export default function getAllPost() {
   const [posts, setPosts] = useState([]);
+  const { currentUser } = CurrentUser();
 
   useEffect(() => {
     async function fetchPosts() {
@@ -31,17 +32,12 @@ export default function getAllPost() {
   }, [posts]);
 
   return (
-    <div className="flex flex-col items-center justify-between ">
+    <div className="flex flex-col items-center justify-between">
       {posts.map((post, index) => (
         <PostCard
           key={index}
-          postId={post._id}
-          ownerImage={post.owner.profilepic}
-          name={post.owner.name}
-          time={post.createdAt}
-          image={post.image}
-          like={post.like}
-          description={post.description}
+          post={post}
+          currentUser={currentUser}
         />
       ))}
     </div>
