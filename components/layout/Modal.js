@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Modal({ children, dropRef,background }) {
+ function Modal({ children, dropRef,background }) {
   return (
     <div className={background && "fixed inset-0 bg-[rgba(0,0,0,0.5)]  p-4 flex justify-center items-center w-full h-full "}>
       <div ref={dropRef}>
@@ -9,3 +9,4 @@ export default function Modal({ children, dropRef,background }) {
     </div>
   );
 }
+export default Modal;

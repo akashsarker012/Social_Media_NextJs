@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Avatar from "@/lib/Avatar";
+import Avatar from "@/components/layout/Avatar";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { IoMdSend } from "react-icons/io";

@@ -4,7 +4,7 @@ import Button from "./Button";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import axios from 'axios';
-import CurrentUser from "./CurrentUser";
+import CurrentUser from "@/lib/CurrentUser";
 
 export default function UploadPost({ handleClose }) {
   const [preview, setPreview] = useState(null);

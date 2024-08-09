@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import Button from "@/lib/Button";
+import Button from "@/components/layout/Button";
 import Cookies from "js-cookie";
 import axios from "axios";
 import toast from "react-hot-toast";

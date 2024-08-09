@@ -1,8 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import PostCard from "@/components/cards/PostCard";
-import CurrentUser from "@/lib/CurrentUser";
+import PostCard from "@/components/cards/PostCard"
 
 async function getData() {
   const backendApi = process.env.NEXT_PUBLIC_BACKEND_API;
@@ -17,7 +16,7 @@ async function getData() {
 
 export default function getAllPost() {
   const [posts, setPosts] = useState([]);
-  const { currentUser } = CurrentUser();
+
 
   useEffect(() => {
     async function fetchPosts() {
@@ -37,8 +36,7 @@ export default function getAllPost() {
         <PostCard
           key={index}
           post={post}
-          currentUser={currentUser}
-        />
+          />
       ))}
     </div>
   );

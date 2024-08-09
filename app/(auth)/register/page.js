@@ -5,7 +5,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import { FaUser } from "react-icons/fa";
 import Image from "next/image";
-import Button from '@/lib/Button';
+import Button from '@/components/layout/Button';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
